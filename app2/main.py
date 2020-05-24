@@ -9,14 +9,16 @@ def main():
 
     root = '/Users/joy/Documents/SPS/data/'
 
-    data = read_all_data([root + 'RSSI_1', root + 'RSSI_2', root + 'RSSI_3'])
+    data = read_all_data([root + 'RSSI_1', root + 'RSSI_2', root + 'RSSI_3', root + 'RSSI_4'])
     gauss_data = process_gaussian_data(data['train'])
     models = get_model(gauss_data)
+
+    mode = 'train'
 
     preds = []
     truths = []
     for cell in range(1, 9):
-        post = cond_post(models, data['train'][cell])
+        post = cond_post(models, data[mode][cell])
         pred = predict(post)
         truth = cell * np.ones(pred.shape)
 
